@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact
 from django.views.generic import ListView
+from django.contrib.auth.models import User
 
 
 # Contact list
@@ -20,19 +21,20 @@ class ContactList(ListView):
 # detail contact
 
 
-@login_required(login_url="/login/")
+###@login_required(login_url="/login/")
 def contact_details(request, id):
-    contact = get_object_or_404(Contact, id=id)
-    context = {"contact": contact}
-    return render(request, "contact/contact_details.html", context)
+   contact = get_object_or_404(Contact, id=id)
+   context = {"contact": contact}
+   return render(request, "contact/contact_details.html", context)
 
 # Add new contact
 
 
-@login_required(login_url="/login/")
 def new_contact(request):
     if request.method == "POST":
-        created_by = request.user
+        user = User.objects.create_user(
+            'john', 'lennon@thebeatles.com', 'johnpassword')
+        created_by = user
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         phone = request.POST.get("phone")
@@ -51,7 +53,7 @@ def new_contact(request):
 
 
 # Update a contact
-@login_required(login_url="/login/")
+#@login_required(login_url="/login/")
 def update_contact(request, id):
     contact = get_object_or_404(Contact, id=id)
     if request.method == "POST":
@@ -70,7 +72,7 @@ def update_contact(request, id):
     return render(request, "contact/update_contact.html", context)
 
 # Remove a contact
-@login_required(login_url="/login/")
+#@login_required(login_url="/login/")
 def delete_contact(request, id):
     contact = get_object_or_404(Contact, id=id)
     if request.method == "POST":
