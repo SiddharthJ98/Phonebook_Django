@@ -1,24 +1,4 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>This is the home page</h1>
-<div class="row">
-  <div class="col-md-6 m-auto">
-    <h4 class="text-center">
-      {{ contact.first_name }} {{ contact.last_name }}
-    </h4>
-    <div class="card card-body">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          Phone : {{ contact.phone }}
-        </li>
-        <li class="list-group-item">
-          Email : {{ contact.email|default_if_none:"no email" }}
-        </li>
-        <li class="list-group-item">
-          Created date : {{ contact.created_at|date:"m-d-y" }}
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
 {% endblock %}
